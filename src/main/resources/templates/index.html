@@ -3,22 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/style.css}" />
 </head>
 <body>
     <div class="outerContainer">
         <h1>Patch File Generator</h1>
 
+        <div class="errorBlock hidElement">
+            <p>Error in generating patch file. Kindly verify the input format.</p>
+        </div>
+
         <h3>Paste Source Files Here</h3>
-        <form th:action="@{/generatedata}" th:method="POST">
-            <textarea rows="20" cols="175">
+        <form th:action="@{/generatedata}" th:method="POST" id="patchForm">
+            <textarea rows="20" cols="175" th:name="'sourceData'">
 
             </textarea>
+            <input th:type="submit"/>
         </form>
 
         <h3>Generated Patch Files</h3>
-        <textarea rows="20" cols="175">
+        <textarea rows="20" cols="175" id="patchData">
 
         </textarea>
     </div>
+
+    <script>
+        document.getElementById('patchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const sourceData = formData.get('sourceData');
+            fetch('/generatedata', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ sourceData: sourceData })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector(".errorBlock").classList.remove("showElement");
+                    document.querySelector(".errorBlock").classList.add("hidElement");
+                    document.getElementById('patchData').value = data.data;
+                    console.log('Number of files processed:', data.count);
+                })
+                .catch(error => {
+                    console.error('Error:', error)
+                    document.querySelector(".errorBlock").classList.remove("hidElement");
+                    document.querySelector(".errorBlock").classList.add("showElement");
+                });
+        });
+    </script>
 </body>
 </html>
