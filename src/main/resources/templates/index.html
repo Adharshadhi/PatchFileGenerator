@@ -9,22 +9,29 @@
     <div class="outerContainer">
         <h1>Patch File Generator</h1>
 
+        <div>
+            <h4>Sample Format 1</h4>
+            <p>Source File : ITOM/src/com/sapphire/cloud/controller/AWSCloudDiscoveryController.java</p>
+            <p>Patch File : WebManagement/standalone/deployments/SapphireIMS.ear/ITOM.war/WEB-INF/classes/com/sapphire/cloud/controller/AWSCloudDiscoveryController.class</p>
+        </div>
+        <div>
+            <h4>Sample Format 2</h4>
+            <p>Source File : ITOM/WebRoot/Discovery_Scheduler_Extjs.jsp</p>
+            <p>Patch File : WebManagement/standalone/deployments/SapphireIMS.ear/ITOM.war/Discovery_Scheduler_Extjs.jsp</p>
+        </div>
+
         <div class="errorBlock hidElement">
-            <p>Error in generating patch file. Kindly verify the input format.</p>
+            <p>Error in generating patch file. Kindly verify the input format and try again.</p>
         </div>
 
         <h3>Paste Source Files Here</h3>
         <form th:action="@{/generatedata}" th:method="POST" id="patchForm">
-            <textarea rows="20" cols="175" th:name="'sourceData'">
-
-            </textarea>
+            <textarea rows="20" cols="175" th:name="'sourceData'"></textarea>
             <input th:type="submit"/>
         </form>
 
         <h3>Generated Patch Files</h3>
-        <textarea rows="20" cols="175" id="patchData">
-
-        </textarea>
+        <textarea rows="20" cols="175" id="patchData"></textarea>
     </div>
 
     <script>
@@ -50,6 +57,7 @@
                     console.error('Error:', error)
                     document.querySelector(".errorBlock").classList.remove("hidElement");
                     document.querySelector(".errorBlock").classList.add("showElement");
+                    window.scrollTo(0,0);
                 });
         });
     </script>

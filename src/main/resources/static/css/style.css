@@ -4,3 +4,7 @@
 .showElement{
     display: block;
 }
+.errorBlock{
+    color: red;
+    font-weight: bold;
+}

@@ -21,7 +21,7 @@ public class PatchFileGeneratorRestController {
             String[] filePaths = sourceData.split("\\r?\\n");
             StringBuilder generatedData = new StringBuilder();
             for(String filePath : filePaths){
-                generatedData.append(PATCH_PREFIX.concat(PatchFileGeneratorUtil.generatePatchFileFormat(filePath.trim()))).append("\n").append(" ");
+                generatedData.append(PATCH_PREFIX.concat(PatchFileGeneratorUtil.generatePatchFileFormat(filePath.trim()))).append("\n");
             }
             resultPatchList.put("data", generatedData.toString().trim());
             resultPatchList.put("count", Integer.toString(filePaths.length));
